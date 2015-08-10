@@ -1,3 +1,6 @@
+<!-- AWP_In_Variable Name='"data"' -->
+<!-- AWP_In_Variable Name='"data".signal' -->
+
 <!DOCTYPE html>
 	<html lang="pt">
         <head>
@@ -24,7 +27,19 @@
                         <td style="vertical-align: top; width: 150px;">ContB</td>
                         <td style="vertical-align: top;" id="VarId2">VALUE2</td>
                     </tr>
+                    
+                    <tr>
+                        <td id="VarId3">VALUE3</td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top; width: 150px;">Signal</td>
+                        <td style="vertical-align: top;" id="VarId4">VALUE4</td>
+                    </tr>
                 </table>
+                <form action="" method="post" onsubmit="return check();">
+                                <input type="submit" value="ON">
+                                <input type="hidden" name='"data".signal' size="20" value="1">
+                            </form>
             </center>
         
             <iframe src="uptime.html" style="display:none;" />
