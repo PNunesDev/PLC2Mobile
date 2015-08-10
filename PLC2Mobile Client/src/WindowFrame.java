@@ -2,7 +2,12 @@
 import java.awt.Component;
 import java.awt.PopupMenu;
 import java.util.ArrayList;
+import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,6 +21,7 @@ import javax.swing.JLabel;
  */
 public class WindowFrame extends javax.swing.JFrame {
      ArrayList<JLabel> JlabelArray;
+     ArrayList<JLabel> JlabelArray2;
      int y=0;
     /**
      * Creates new form WindowFrame
@@ -42,11 +48,9 @@ public class WindowFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         TxtDatablock = new javax.swing.JTextField();
         AddToQueue = new javax.swing.JButton();
-        ScrollPaneVariable = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
-        Btnaddvariable = new javax.swing.JButton();
-        Lblvariable = new javax.swing.JLabel();
-        TxtVariable = new javax.swing.JTextField();
+        ScrollPanelVariable = new javax.swing.JScrollPane();
+        PanelVariable = new javax.swing.JPanel();
+        txtVariable = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PLC2Mobile Client");
@@ -98,39 +102,24 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        ScrollPaneVariable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(51, 51, 255), new java.awt.Color(255, 0, 51), null, null));
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(0, 0, 255), new java.awt.Color(255, 0, 0), null, null));
-
-        Btnaddvariable.setText("Add");
-
-        Lblvariable.setText("Variable:");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(Lblvariable)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TxtVariable, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Btnaddvariable)
-                .addGap(57, 57, 57))
+        javax.swing.GroupLayout PanelVariableLayout = new javax.swing.GroupLayout(PanelVariable);
+        PanelVariable.setLayout(PanelVariableLayout);
+        PanelVariableLayout.setHorizontalGroup(
+            PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelVariableLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(txtVariable)
+                .addContainerGap(427, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        PanelVariableLayout.setVerticalGroup(
+            PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelVariableLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Btnaddvariable)
-                    .addComponent(Lblvariable)
-                    .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(211, Short.MAX_VALUE))
+                .addComponent(txtVariable)
+                .addContainerGap(215, Short.MAX_VALUE))
         );
 
-        ScrollPaneVariable.setViewportView(jPanel1);
+        ScrollPanelVariable.setViewportView(PanelVariable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,7 +131,7 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PanelDatablock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ScrollPaneVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(ScrollPanelVariable))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -154,7 +143,7 @@ public class WindowFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(PanelDatablock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ScrollPaneVariable, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)))
+                        .addComponent(ScrollPanelVariable)))
                 .addContainerGap())
         );
 
@@ -172,11 +161,20 @@ public class WindowFrame extends javax.swing.JFrame {
        JLabel jlabel = new JLabel(" ");
         JlabelArray.add(jlabel);
         PanelDatablockQueue.add((Component) JlabelArray.get(i));
-        ScrollPaneDatablockQueue.setViewportView(PanelDatablockQueue);
-//        PanelDatablockQueue.add(jlabel);
-//        ScrollPaneDatablockQueue.setViewportView(PanelDatablockQueue);   
+        ScrollPaneDatablockQueue.setViewportView(PanelDatablockQueue); 
        }
 }
+      public void Gendatavariable() {
+       int i;
+       for(i=0; i<=5; i++){
+       JLabel jlabel2 = new JLabel(" Um dois som ");
+        JlabelArray2.add(jlabel2);
+        PanelVariable.add((Component) JlabelArray2.get(i));
+        ScrollPanelVariable.setViewportView(PanelVariable); 
+        
+       }
+}
+
     /**
      * @param args the command line arguments
      */
@@ -214,15 +212,13 @@ public class WindowFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddToQueue;
-    private javax.swing.JButton Btnaddvariable;
-    private javax.swing.JLabel Lblvariable;
     private javax.swing.JPanel PanelDatablock;
     private javax.swing.JPanel PanelDatablockQueue;
+    private javax.swing.JPanel PanelVariable;
     private javax.swing.JScrollPane ScrollPaneDatablockQueue;
-    private javax.swing.JScrollPane ScrollPaneVariable;
+    private javax.swing.JScrollPane ScrollPanelVariable;
     private javax.swing.JTextField TxtDatablock;
-    private javax.swing.JTextField TxtVariable;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel txtVariable;
     // End of variables declaration//GEN-END:variables
 }
