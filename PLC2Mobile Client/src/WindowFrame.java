@@ -51,6 +51,9 @@ public class WindowFrame extends javax.swing.JFrame {
         ScrollPanelVariable = new javax.swing.JScrollPane();
         PanelVariable = new javax.swing.JPanel();
         txtVariable = new javax.swing.JLabel();
+        LblVariable = new javax.swing.JLabel();
+        TxtVariable = new javax.swing.JTextField();
+        BtnVariable = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PLC2Mobile Client");
@@ -102,6 +105,17 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        LblVariable.setText("jLabel1");
+
+        TxtVariable.setText("jTextField1");
+
+        BtnVariable.setText("Add");
+        BtnVariable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnVariableActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelVariableLayout = new javax.swing.GroupLayout(PanelVariable);
         PanelVariable.setLayout(PanelVariableLayout);
         PanelVariableLayout.setHorizontalGroup(
@@ -109,14 +123,27 @@ public class WindowFrame extends javax.swing.JFrame {
             .addGroup(PanelVariableLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(txtVariable)
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnVariable)
+                    .addGroup(PanelVariableLayout.createSequentialGroup()
+                        .addComponent(LblVariable)
+                        .addGap(18, 18, 18)
+                        .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(293, Short.MAX_VALUE))
         );
         PanelVariableLayout.setVerticalGroup(
             PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelVariableLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtVariable)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addGroup(PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(LblVariable)
+                        .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtVariable))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnVariable)
+                .addContainerGap(172, Short.MAX_VALUE))
         );
 
         ScrollPanelVariable.setViewportView(PanelVariable);
@@ -155,6 +182,12 @@ public class WindowFrame extends javax.swing.JFrame {
         y++;
     }//GEN-LAST:event_AddToQueueActionPerformed
 
+    private void BtnVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVariableActionPerformed
+        JLabel temp = new JLabel(" Bitches ");
+
+        
+    }//GEN-LAST:event_BtnVariableActionPerformed
+
     public void Gendatablock() {
        int i;
        for(i=0; i<=100; i++){
@@ -163,18 +196,7 @@ public class WindowFrame extends javax.swing.JFrame {
         PanelDatablockQueue.add((Component) JlabelArray.get(i));
         ScrollPaneDatablockQueue.setViewportView(PanelDatablockQueue); 
        }
-}
-      public void Gendatavariable() {
-       int i;
-       for(i=0; i<=5; i++){
-       JLabel jlabel2 = new JLabel(" Um dois som ");
-        JlabelArray2.add(jlabel2);
-        PanelVariable.add((Component) JlabelArray2.get(i));
-        ScrollPanelVariable.setViewportView(PanelVariable); 
-        
-       }
-}
-
+    }
     /**
      * @param args the command line arguments
      */
@@ -212,12 +234,15 @@ public class WindowFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddToQueue;
+    private javax.swing.JButton BtnVariable;
+    private javax.swing.JLabel LblVariable;
     private javax.swing.JPanel PanelDatablock;
     private javax.swing.JPanel PanelDatablockQueue;
     private javax.swing.JPanel PanelVariable;
     private javax.swing.JScrollPane ScrollPaneDatablockQueue;
     private javax.swing.JScrollPane ScrollPanelVariable;
     private javax.swing.JTextField TxtDatablock;
+    private javax.swing.JTextField TxtVariable;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel txtVariable;
     // End of variables declaration//GEN-END:variables
