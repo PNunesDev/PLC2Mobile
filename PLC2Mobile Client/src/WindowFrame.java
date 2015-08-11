@@ -53,7 +53,7 @@ public class WindowFrame extends javax.swing.JFrame {
         dataBlockArray = new ArrayList();
         pnlDataBlockQueue = new JPanel(new GridLayout(0, 1));
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
-        
+        showButtonsDataBlocks(dataBlockArray);
         
     }
     
@@ -69,6 +69,20 @@ public class WindowFrame extends javax.swing.JFrame {
     };
     verticalBar.addAdjustmentListener(downScroller);
 }
+    
+    private void showButtonsDataBlocks(ArrayList<DataBlock> array){
+        pnlDataBlockQueue.removeAll();
+        int lenght = array.size();
+        DataBlock db;
+        for(int i=0; i<lenght; i++){
+            db = array.get(i);
+            JButton bt = new JButton(db.getName());
+            bt.setPreferredSize(new Dimension(100, 30));
+            pnlDataBlockQueue.add(bt);
+            ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
+            scrollToBottom(ScrollPaneDatablockQueue);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -211,14 +225,14 @@ public class WindowFrame extends javax.swing.JFrame {
             
             String btTxt = TxtDatablock.getText();
             DataBlock db = new DataBlock(btTxt);
+            //Por as variaveis para o data block
+            //
+            
+            
             dataBlockArray.add(db);
             
             
-            JButton bt = new JButton(btTxt);
-            bt.setPreferredSize(new Dimension(100, 30));
-            pnlDataBlockQueue.add(bt);
-            ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
-            scrollToBottom(ScrollPaneDatablockQueue);
+            showButtonsDataBlocks(dataBlockArray);
             
     }//GEN-LAST:event_AddToQueueActionPerformed
 
@@ -228,15 +242,6 @@ public class WindowFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_BtnVariableActionPerformed
 
-//    public void Gendatablock() {
-//       int i;
-//       for(i=0; i<=100; i++){
-//       JLabel jlabel = new JLabel(" ");
-//        JlabelArray.add(jlabel);
-//        PanelDatablockQueue.add((Component) JlabelArray.get(i));
-//        ScrollPaneDatablockQueue.setViewportView(PanelDatablockQueue); 
-//       }
-//    }
     /**
      * @param args the command line arguments
      */

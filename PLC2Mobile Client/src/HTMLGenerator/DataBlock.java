@@ -31,4 +31,8 @@ public class DataBlock {
     public void addVar(Variable var){
         this.vars.add(var);
     }
+    
+    public String getName(){
+        return name;
+    }
 }
