@@ -8,6 +8,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.PopupMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class WindowFrame extends javax.swing.JFrame {
     
     ArrayList<DataBlock> dataBlockArray;
     JPanel pnlDataBlockQueue;
+    ActionListener listener;
      
      
      ArrayList<JLabel> JlabelArray2;
@@ -54,6 +57,26 @@ public class WindowFrame extends javax.swing.JFrame {
         pnlDataBlockQueue = new JPanel(new GridLayout(0, 1));
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
         showButtonsDataBlocks(dataBlockArray);
+        
+        listener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton bt = (JButton) e.getSource();
+                String txt = bt.getText();
+                int index=0;
+                for(int i=0; i<dataBlockArray.size(); i++){
+                    if(txt.equals(dataBlockArray.get(i).getName())){
+                        index = i;
+                        break;
+                    }
+                    
+                }
+                DataBlock db = dataBlockArray.get(index);
+                String name = db.getName();
+                TxtDatablock.setText(name);
+            }
+        };
         
     }
     
@@ -77,6 +100,7 @@ public class WindowFrame extends javax.swing.JFrame {
         for(int i=0; i<lenght; i++){
             db = array.get(i);
             JButton bt = new JButton(db.getName());
+            bt.addActionListener(listener);
             bt.setPreferredSize(new Dimension(100, 30));
             pnlDataBlockQueue.add(bt);
             ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
