@@ -58,6 +58,7 @@ public class WindowFrame extends javax.swing.JFrame {
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
         showButtonsDataBlocks(dataBlockArray);
         
+        //Listener para os botoes que representam os data blocks
         listener = new ActionListener() {
 
             @Override
@@ -79,7 +80,7 @@ public class WindowFrame extends javax.swing.JFrame {
         };
         
     }
-    
+    //Faz scroll para baixo de um scrollpane
     private void scrollToBottom(JScrollPane scrollPane) {
     JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
     AdjustmentListener downScroller = new AdjustmentListener() {
@@ -92,7 +93,7 @@ public class WindowFrame extends javax.swing.JFrame {
     };
     verticalBar.addAdjustmentListener(downScroller);
 }
-    
+    //Cria e mostra os botoes de acordo com o arraylist dos datablocks
     private void showButtonsDataBlocks(ArrayList<DataBlock> array){
         pnlDataBlockQueue.removeAll();
         int lenght = array.size();
@@ -101,8 +102,14 @@ public class WindowFrame extends javax.swing.JFrame {
             db = array.get(i);
             JButton bt = new JButton(db.getName());
             bt.addActionListener(listener);
-            bt.setPreferredSize(new Dimension(100, 30));
+            bt.setPreferredSize(new Dimension(100, 35));
+//            JButton btClose = new JButton("DEL");
+//            JPanel pnl = new JPanel();
+//            pnl.add(bt);
+//            pnl.add(btClose);
+            
             pnlDataBlockQueue.add(bt);
+            
             ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
             scrollToBottom(ScrollPaneDatablockQueue);
         }
@@ -248,14 +255,28 @@ public class WindowFrame extends javax.swing.JFrame {
     private void AddToQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddToQueueActionPerformed
             
             String btTxt = TxtDatablock.getText();
+            TxtDatablock.setText(null);
+            TxtDatablock.grabFocus();
+            
+            Integer index=null;
+            for(int i=0; i<dataBlockArray.size(); i++){
+                    if(btTxt.equals(dataBlockArray.get(i).getName())){
+                        index = i;
+                        break;
+                    }
+                    
+                }
+            if(!(index==null)){
+                System.out.println("ERRO!!");
+                return;
+            }
+            
             DataBlock db = new DataBlock(btTxt);
             //Por as variaveis para o data block
             //
             
             
             dataBlockArray.add(db);
-            
-            
             showButtonsDataBlocks(dataBlockArray);
             
     }//GEN-LAST:event_AddToQueueActionPerformed
