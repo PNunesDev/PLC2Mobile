@@ -15,7 +15,7 @@ public class DataBlock {
     String name;
     ArrayList<Variable> vars;
     
-    public void DataBlock(){
+    public DataBlock(){
         
     }
     
@@ -24,7 +24,7 @@ public class DataBlock {
         this.vars = vars;
     }
     
-    public void DataBlock(String name){
+    public DataBlock(String name){
         this.name = name;
     }
     

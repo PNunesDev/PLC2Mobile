@@ -1,15 +1,22 @@
 
+import HTMLGenerator.DataBlock;
+import java.awt.Adjustable;
 import java.awt.Button;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.PopupMenu;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -25,7 +32,8 @@ import javax.swing.JTextField;
  */
 public class WindowFrame extends javax.swing.JFrame {
     
-    ArrayList<Button> dataBlockArray;
+    ArrayList<DataBlock> dataBlockArray;
+    JPanel pnlDataBlockQueue;
      
      
      ArrayList<JLabel> JlabelArray2;
@@ -36,9 +44,31 @@ public class WindowFrame extends javax.swing.JFrame {
     public WindowFrame() {
         
         initComponents();
-        dataBlockArray = new ArrayList();
+        initMyComps();
 
     }
+    
+    public void initMyComps(){
+        
+        dataBlockArray = new ArrayList();
+        pnlDataBlockQueue = new JPanel(new GridLayout(0, 1));
+        ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
+        
+        
+    }
+    
+    private void scrollToBottom(JScrollPane scrollPane) {
+    JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
+    AdjustmentListener downScroller = new AdjustmentListener() {
+        @Override
+        public void adjustmentValueChanged(AdjustmentEvent e) {
+            Adjustable adjustable = e.getAdjustable();
+            adjustable.setValue(adjustable.getMaximum());
+            verticalBar.removeAdjustmentListener(this);
+        }
+    };
+    verticalBar.addAdjustmentListener(downScroller);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,7 +80,6 @@ public class WindowFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         ScrollPaneDatablockQueue = new javax.swing.JScrollPane();
-        PanelDatablockQueue = new javax.swing.JPanel();
         PanelDatablock = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         TxtDatablock = new javax.swing.JTextField();
@@ -68,12 +97,6 @@ public class WindowFrame extends javax.swing.JFrame {
         ScrollPaneDatablockQueue.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(51, 51, 255), new java.awt.Color(255, 0, 0), null, null));
         ScrollPaneDatablockQueue.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         ScrollPaneDatablockQueue.setToolTipText("");
-
-        PanelDatablockQueue.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 255, 153), new java.awt.Color(51, 255, 153), null, null));
-        PanelDatablockQueue.setMaximumSize(new java.awt.Dimension(300, 300));
-        PanelDatablockQueue.setPreferredSize(new java.awt.Dimension(120, 260));
-        PanelDatablockQueue.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING));
-        ScrollPaneDatablockQueue.setViewportView(PanelDatablockQueue);
 
         PanelDatablock.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(102, 0, 255), new java.awt.Color(255, 0, 51), null, null));
 
@@ -185,15 +208,18 @@ public class WindowFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddToQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddToQueueActionPerformed
-        String btTxt = TxtDatablock.getText();
-        
-            Button bt = new Button(btTxt);
-            bt.setPreferredSize(new Dimension(120, 30));
-            dataBlockArray.add(bt);
-            PanelDatablockQueue.add(bt);
-            //PanelDatablockQueue.setPreferredSize(ScrollPaneDatablockQueue.getPreferredSize());
-            ScrollPaneDatablockQueue.setViewportView(PanelDatablockQueue);
-            //pack();
+            
+            String btTxt = TxtDatablock.getText();
+            DataBlock db = new DataBlock(btTxt);
+            dataBlockArray.add(db);
+            
+            
+            JButton bt = new JButton(btTxt);
+            bt.setPreferredSize(new Dimension(100, 30));
+            pnlDataBlockQueue.add(bt);
+            ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
+            scrollToBottom(ScrollPaneDatablockQueue);
+            
     }//GEN-LAST:event_AddToQueueActionPerformed
 
     private void BtnVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVariableActionPerformed
@@ -251,7 +277,6 @@ public class WindowFrame extends javax.swing.JFrame {
     private javax.swing.JButton BtnVariable;
     private javax.swing.JLabel LblVariable;
     private javax.swing.JPanel PanelDatablock;
-    private javax.swing.JPanel PanelDatablockQueue;
     private javax.swing.JPanel PanelVariable;
     private javax.swing.JScrollPane ScrollPaneDatablockQueue;
     private javax.swing.JScrollPane ScrollPanelVariable;
