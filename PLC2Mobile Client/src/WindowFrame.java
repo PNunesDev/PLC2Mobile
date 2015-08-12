@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +17,11 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,7 +46,8 @@ public class WindowFrame extends javax.swing.JFrame {
     JPanel pnlDataBlockQueue;
     JPanel pnlVarible;
     JPanel pnlVarible2;
-    ActionListener listener;
+    ActionListener dataBlockListener;;
+    ActionListener dataBlockDelListener;
      
      
      ArrayList<JLabel> JlabelArray2;
@@ -69,7 +74,7 @@ public class WindowFrame extends javax.swing.JFrame {
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
         
         //Listener para os botoes que representam os data blocks
-        listener = new ActionListener() {
+        dataBlockListener = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,6 +91,29 @@ public class WindowFrame extends javax.swing.JFrame {
                 DataBlock db = dataBlockArray.get(index);
                 String name = db.getName();
                 TxtDatablock.setText(name);
+            }
+        };
+        
+        dataBlockDelListener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton bt = (JButton) e.getSource();
+                JPanel pnl = (JPanel) bt.getParent();
+                bt = (JButton) pnl.getComponent(0);
+                String txt = bt.getText();
+                //int index=0;
+                for(int i=0; i<dataBlockArray.size(); i++){
+                    if(txt.equals(dataBlockArray.get(i).getName())){
+                        dataBlockArray.remove(i);
+                        showButtonsDataBlocks(dataBlockArray);
+                        break;
+                    }
+                    
+                }
+//                DataBlock db = dataBlockArray.get(index);
+//                String name = db.getName();
+//                TxtDatablock.setText(name);
             }
         };
         
@@ -111,18 +139,29 @@ public class WindowFrame extends javax.swing.JFrame {
         for(int i=0; i<lenght; i++){
             db = array.get(i);
             JButton bt = new JButton(db.getName());
-            bt.addActionListener(listener);
-            bt.setPreferredSize(new Dimension(100, 35));
-//            JButton btClose = new JButton("DEL");
-//            JPanel pnl = new JPanel();
-//            pnl.add(bt);
-//            pnl.add(btClose);
+            bt.addActionListener(dataBlockListener);
+            bt.setPreferredSize(new Dimension(90, 35));
+            JButton btClose = new JButton();
             
-            pnlDataBlockQueue.add(bt);
+            try {
+                Image img = ImageIO.read(getClass().getResource("resources/Close_Box_Red.png"));
+                btClose.setIcon(new ImageIcon(img));
+            } catch (IOException ex) {
+            }
+            
+            btClose.setPreferredSize(new Dimension(35, 35));
+            btClose.addActionListener(dataBlockDelListener);
+            JPanel pnl = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
+            pnl.add(bt);
+            pnl.add(btClose);
+            
+            pnlDataBlockQueue.add(pnl);
+            //pnlDataBlockQueue.add(btClose);
             
             ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
             scrollToBottom(ScrollPaneDatablockQueue);
         }
+        ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
     }
     
      private void showButtonsVariableBlock(ArrayList<Variable> array){
