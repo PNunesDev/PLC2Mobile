@@ -23,7 +23,9 @@ import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -48,6 +50,7 @@ public class WindowFrame extends javax.swing.JFrame {
     JPanel pnlVarible2;
     ActionListener dataBlockListener;;
     ActionListener dataBlockDelListener;
+    JFrame frame = this;
      
      
      ArrayList<JLabel> JlabelArray2;
@@ -68,7 +71,7 @@ public class WindowFrame extends javax.swing.JFrame {
         variableBlockArray = new ArrayList();
         pnlDataBlockQueue = new JPanel(new GridLayout(0, 1));
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
-        showButtonsDataBlocks(dataBlockArray);
+        showButtonsDataBlocks(dataBlockArray, true);
         
         pnlVarible = new JPanel(new GridLayout(0, 1));
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
@@ -90,7 +93,11 @@ public class WindowFrame extends javax.swing.JFrame {
                 }
                 DataBlock db = dataBlockArray.get(index);
                 String name = db.getName();
-                TxtDatablock.setText(name);
+                //TxtDatablock.setText(name);
+                //String newName = JOptionPane.showInputDialog(frame, "Novo nome", null);
+                //JOptionPane.showInputDialog(frame, "Novo nome:", "Editar nome DataBlock", 3);
+                //TxtDatablock.setText(newName);
+                
             }
         };
         
@@ -106,7 +113,7 @@ public class WindowFrame extends javax.swing.JFrame {
                 for(int i=0; i<dataBlockArray.size(); i++){
                     if(txt.equals(dataBlockArray.get(i).getName())){
                         dataBlockArray.remove(i);
-                        showButtonsDataBlocks(dataBlockArray);
+                        showButtonsDataBlocks(dataBlockArray, false);
                         break;
                     }
                     
@@ -132,7 +139,7 @@ public class WindowFrame extends javax.swing.JFrame {
     verticalBar.addAdjustmentListener(downScroller);
 }
     //Cria e mostra os botoes de acordo com o arraylist dos datablocks
-    private void showButtonsDataBlocks(ArrayList<DataBlock> array){
+    private void showButtonsDataBlocks(ArrayList<DataBlock> array, boolean scroll){
         pnlDataBlockQueue.removeAll();
         int lenght = array.size();
         DataBlock db;
@@ -159,7 +166,10 @@ public class WindowFrame extends javax.swing.JFrame {
             //pnlDataBlockQueue.add(btClose);
             
             ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
-            scrollToBottom(ScrollPaneDatablockQueue);
+            if(scroll){
+                scrollToBottom(ScrollPaneDatablockQueue);
+            }
+            
         }
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
     }
@@ -197,15 +207,12 @@ public class WindowFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         ScrollPaneDatablockQueue = new javax.swing.JScrollPane();
-        PanelDatablock = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        TxtDatablock = new javax.swing.JTextField();
-        AddToQueue = new javax.swing.JButton();
         PanelAddVariable = new javax.swing.JPanel();
         LblVariable = new javax.swing.JLabel();
         TxtVariable = new javax.swing.JTextField();
         BtnAddVariable = new javax.swing.JButton();
         ScrollPaneVariable = new javax.swing.JScrollPane();
+        AddToQueue = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PLC2Mobile Client");
@@ -213,43 +220,6 @@ public class WindowFrame extends javax.swing.JFrame {
         ScrollPaneDatablockQueue.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(51, 51, 255), new java.awt.Color(255, 0, 0), null, null));
         ScrollPaneDatablockQueue.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         ScrollPaneDatablockQueue.setToolTipText("");
-
-        PanelDatablock.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(102, 0, 255), new java.awt.Color(255, 0, 51), null, null));
-
-        jLabel2.setText("Datablock Name:");
-
-        TxtDatablock.setText("Hometest");
-
-        AddToQueue.setText("Add to Queue");
-        AddToQueue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddToQueueActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PanelDatablockLayout = new javax.swing.GroupLayout(PanelDatablock);
-        PanelDatablock.setLayout(PanelDatablockLayout);
-        PanelDatablockLayout.setHorizontalGroup(
-            PanelDatablockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDatablockLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TxtDatablock, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(AddToQueue)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        PanelDatablockLayout.setVerticalGroup(
-            PanelDatablockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatablockLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(PanelDatablockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(TxtDatablock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddToQueue))
-                .addContainerGap())
-        );
 
         PanelAddVariable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(102, 0, 255), new java.awt.Color(255, 0, 51), null, null));
 
@@ -273,7 +243,7 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(BtnAddVariable)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         PanelAddVariableLayout.setVerticalGroup(
             PanelAddVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,16 +256,24 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        AddToQueue.setText("New Data Block");
+        AddToQueue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddToQueueActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ScrollPaneDatablockQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ScrollPaneDatablockQueue, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(AddToQueue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PanelDatablock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanelAddVariable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ScrollPaneVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,45 +285,59 @@ public class WindowFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ScrollPaneDatablockQueue, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(PanelDatablock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(PanelAddVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ScrollPaneVariable)))
+                        .addComponent(ScrollPaneVariable))
+                    .addComponent(ScrollPaneDatablockQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AddToQueue, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    //Adicionar Data Block ao array
     private void AddToQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddToQueueActionPerformed
             
-            String btTxt = TxtDatablock.getText();
-            TxtDatablock.setText(null);
-            TxtDatablock.grabFocus();
+            //String btTxt = TxtDatablock.getText();
+            String dbTxt = JOptionPane.showInputDialog(rootPane, "Novo nome:", "Editar nome DataBlock", 3);
+            if(dbTxt.equals("")){
+                JOptionPane.showMessageDialog(this,
+                "Atribuir um nome ao DataBlock!",
+                "Aviso",
+                JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            //TxtDatablock.setText(null);
+            //TxtDatablock.grabFocus();
             
             Integer index=null;
             for(int i=0; i<dataBlockArray.size(); i++){
-                    if(btTxt.equals(dataBlockArray.get(i).getName())){
+                    if(dbTxt.equals(dataBlockArray.get(i).getName())){
                         index = i;
                         break;
                     }
                     
                 }
             if(!(index==null)){
-                System.out.println("ERRO!!");
+                JOptionPane.showMessageDialog(this,
+                "Já existe um DataBlock com esse nome!",
+                "Conflito",
+                JOptionPane.WARNING_MESSAGE);
                 return;
             }
             
-            DataBlock db = new DataBlock(btTxt);
+            DataBlock db = new DataBlock(dbTxt);
             //Por as variaveis para o data block
             //
             
             
             dataBlockArray.add(db);
-            showButtonsDataBlocks(dataBlockArray);
+            showButtonsDataBlocks(dataBlockArray, true);
             
     }//GEN-LAST:event_AddToQueueActionPerformed
 
@@ -413,11 +405,8 @@ public class WindowFrame extends javax.swing.JFrame {
     private javax.swing.JButton BtnAddVariable;
     private javax.swing.JLabel LblVariable;
     private javax.swing.JPanel PanelAddVariable;
-    private javax.swing.JPanel PanelDatablock;
     private javax.swing.JScrollPane ScrollPaneDatablockQueue;
     private javax.swing.JScrollPane ScrollPaneVariable;
-    private javax.swing.JTextField TxtDatablock;
     private javax.swing.JTextField TxtVariable;
-    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
