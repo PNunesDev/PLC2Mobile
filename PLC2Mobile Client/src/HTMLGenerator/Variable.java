@@ -17,29 +17,42 @@ public class Variable {
     Boolean bool;
     Integer value;
     
-    public void Variable(){
+    public Variable(){
         
     }
+    
+        public Variable(String name){
+            this.name=name;
+            txt=null;
+            bool=null;
+            value=null;
+        }
     //Contrutor para vaiaveis tipo texto
-    public void Variable(String name, String txt){
+    public Variable(String name, String txt){
         this.name = name;
         this.txt = txt;
         this.bool = null;
         this.value = null;
     }
     //Contrutor para vaiaveis tipo boolean
-    public void Variable(String name, Boolean bool){
+    public Variable(String name, Boolean bool){
         this.name = name;
         this.txt = null;
         this.bool = bool;
         this.value = null;
     }
     //Contrutor para vaiaveis tipo numerico
-    public void Variable(String name, int val){
+    public Variable(String name, int val){
         this.name = name;
         this.txt = null;
         this.bool = null;
         this.value = val;
     }
+    
+    public String getname(){
+        return name;
+    }
+    
+
     
 }

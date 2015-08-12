@@ -1,7 +1,9 @@
 
 import HTMLGenerator.DataBlock;
+import HTMLGenerator.Variable;
 import java.awt.Adjustable;
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -33,9 +37,11 @@ import javax.swing.JTextField;
  * @author Obscu
  */
 public class WindowFrame extends javax.swing.JFrame {
-    
     ArrayList<DataBlock> dataBlockArray;
+    ArrayList<Variable> variableBlockArray;
     JPanel pnlDataBlockQueue;
+    JPanel pnlVarible;
+    JPanel pnlVarible2;
     ActionListener listener;
      
      
@@ -54,9 +60,13 @@ public class WindowFrame extends javax.swing.JFrame {
     public void initMyComps(){
         
         dataBlockArray = new ArrayList();
+        variableBlockArray = new ArrayList();
         pnlDataBlockQueue = new JPanel(new GridLayout(0, 1));
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
         showButtonsDataBlocks(dataBlockArray);
+        
+        pnlVarible = new JPanel(new GridLayout(0, 1));
+        ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
         
         //Listener para os botoes que representam os data blocks
         listener = new ActionListener() {
@@ -114,6 +124,29 @@ public class WindowFrame extends javax.swing.JFrame {
             scrollToBottom(ScrollPaneDatablockQueue);
         }
     }
+    
+     private void showButtonsVariableBlock(ArrayList<Variable> array){
+        pnlVarible.removeAll();
+        int lenght = array.size();
+        Variable db;
+        for(int i=0; i<lenght; i++){
+            db = array.get(i);
+            JLabel LblVariable = new JLabel("Variavel "+(i+1)+":");
+            JTextField bt = new JTextField(db.getname());
+            bt.setPreferredSize(new Dimension(100, 35));
+            JPanel lhurz = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
+            lhurz.add(LblVariable);
+            lhurz.add(bt);
+            pnlVarible.add(lhurz);
+            
+            ScrollPaneVariable.setViewportView(pnlVarible);
+            scrollToBottom(ScrollPaneVariable);
+        }
+    }
+
+ 
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -129,12 +162,11 @@ public class WindowFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         TxtDatablock = new javax.swing.JTextField();
         AddToQueue = new javax.swing.JButton();
-        ScrollPanelVariable = new javax.swing.JScrollPane();
-        PanelVariable = new javax.swing.JPanel();
-        txtVariable = new javax.swing.JLabel();
+        PanelAddVariable = new javax.swing.JPanel();
         LblVariable = new javax.swing.JLabel();
         TxtVariable = new javax.swing.JTextField();
-        BtnVariable = new javax.swing.JButton();
+        BtnAddVariable = new javax.swing.JButton();
+        ScrollPaneVariable = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PLC2Mobile Client");
@@ -180,48 +212,40 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        LblVariable.setText("jLabel1");
+        PanelAddVariable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(102, 0, 255), new java.awt.Color(255, 0, 51), null, null));
 
-        TxtVariable.setText("jTextField1");
+        LblVariable.setText("Variable Name:");
 
-        BtnVariable.setText("Add");
-        BtnVariable.addActionListener(new java.awt.event.ActionListener() {
+        BtnAddVariable.setText("Add to Queue");
+        BtnAddVariable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnVariableActionPerformed(evt);
+                BtnAddVariableActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout PanelVariableLayout = new javax.swing.GroupLayout(PanelVariable);
-        PanelVariable.setLayout(PanelVariableLayout);
-        PanelVariableLayout.setHorizontalGroup(
-            PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelVariableLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(txtVariable)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnVariable)
-                    .addGroup(PanelVariableLayout.createSequentialGroup()
-                        .addComponent(LblVariable)
-                        .addGap(18, 18, 18)
-                        .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(293, Short.MAX_VALUE))
+        javax.swing.GroupLayout PanelAddVariableLayout = new javax.swing.GroupLayout(PanelAddVariable);
+        PanelAddVariable.setLayout(PanelAddVariableLayout);
+        PanelAddVariableLayout.setHorizontalGroup(
+            PanelAddVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelAddVariableLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(LblVariable)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BtnAddVariable)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        PanelVariableLayout.setVerticalGroup(
-            PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelVariableLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(LblVariable)
-                        .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtVariable))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnVariable)
-                .addContainerGap(172, Short.MAX_VALUE))
+        PanelAddVariableLayout.setVerticalGroup(
+            PanelAddVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelAddVariableLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PanelAddVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LblVariable)
+                    .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnAddVariable))
+                .addContainerGap())
         );
-
-        ScrollPanelVariable.setViewportView(PanelVariable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -233,7 +257,10 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PanelDatablock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ScrollPanelVariable))
+                    .addComponent(PanelAddVariable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ScrollPaneVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -245,7 +272,9 @@ public class WindowFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(PanelDatablock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ScrollPanelVariable, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)))
+                        .addComponent(PanelAddVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ScrollPaneVariable)))
                 .addContainerGap())
         );
 
@@ -281,11 +310,29 @@ public class WindowFrame extends javax.swing.JFrame {
             
     }//GEN-LAST:event_AddToQueueActionPerformed
 
-    private void BtnVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVariableActionPerformed
-        JLabel temp = new JLabel(" Bitches ");
-
-        
-    }//GEN-LAST:event_BtnVariableActionPerformed
+    private void BtnAddVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddVariableActionPerformed
+            String btTxt = TxtVariable.getText();
+            TxtVariable.setText(null);
+            TxtVariable.grabFocus();
+            
+            Integer index=null;
+            for(int i=0; i<variableBlockArray.size(); i++){
+                    if(btTxt.equals(variableBlockArray.get(i).getname())){
+                        index = i;
+                        break;
+                    }
+                    
+                }
+            if(!(index==null)){
+                System.out.println("ERRO!!");
+                return;
+            }
+            
+            Variable var= new Variable(btTxt);
+            variableBlockArray.add(var);
+            System.out.println(var.getname());
+            showButtonsVariableBlock(variableBlockArray);
+    }//GEN-LAST:event_BtnAddVariableActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,15 +371,14 @@ public class WindowFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddToQueue;
-    private javax.swing.JButton BtnVariable;
+    private javax.swing.JButton BtnAddVariable;
     private javax.swing.JLabel LblVariable;
+    private javax.swing.JPanel PanelAddVariable;
     private javax.swing.JPanel PanelDatablock;
-    private javax.swing.JPanel PanelVariable;
     private javax.swing.JScrollPane ScrollPaneDatablockQueue;
-    private javax.swing.JScrollPane ScrollPanelVariable;
+    private javax.swing.JScrollPane ScrollPaneVariable;
     private javax.swing.JTextField TxtDatablock;
     private javax.swing.JTextField TxtVariable;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel txtVariable;
     // End of variables declaration//GEN-END:variables
 }
