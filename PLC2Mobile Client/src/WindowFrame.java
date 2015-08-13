@@ -53,6 +53,8 @@ public class WindowFrame extends javax.swing.JFrame {
     ActionListener dataBlockListener;;
     ActionListener dataBlockDelListener;
     ActionListener dataBlockEditListener;
+    ActionListener variableEditListener;
+    ActionListener variableDelListener;
     JFrame frame = this;
     JLabel lblVariable2;
      
@@ -171,6 +173,69 @@ public class WindowFrame extends javax.swing.JFrame {
             }
         };
         
+         variableDelListener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton bt = (JButton) e.getSource();
+                JPanel pnl = (JPanel) bt.getParent();
+                bt = (JButton) pnl.getComponent(0);
+                String txt = bt.getText();
+                //int index=0;
+                for(int i=0; i<dataBlockArray.size(); i++){
+                    if(txt.equals(dataBlockArray.get(i).getName())){
+                        dataBlockArray.remove(i);
+                        showButtonsDataBlocks(dataBlockArray, false);
+                        break;
+                    }
+                    
+                }
+//                DataBlock db = dataBlockArray.get(index);
+//                String name = db.getName();
+//                TxtDatablock.setText(name);
+            }
+        };
+        
+        //Açao do botao de editar
+        variableEditListener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Variable> vars = data.getVars();
+                JButton bt = (JButton) e.getSource();
+                JPanel pnl = (JPanel) bt.getParent();
+                JLabel var = (JLabel) pnl.getComponent(1);
+                String oldTxt = var.getText();
+                Integer index = null;
+                String txt = JOptionPane.showInputDialog(frame, "Novo nome:", "Editar nome", 3);
+                Integer varIndex=null;
+                for(int i=0; i<vars.size(); i++){
+                    if(txt.equals(vars.get(i).getname())){
+                        index = i;
+                        break;
+                    }
+                    else if(oldTxt.equals(vars.get(i).getname())){
+                        varIndex = i;
+                    }
+                    
+                }
+                if(!(index==null)){
+                JOptionPane.showMessageDialog(frame,
+                "Já existe um DataBlock com esse nome!",
+                "Conflito",
+                JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+                
+                
+                var.setText(txt);
+                vars.get(varIndex).setName(txt);
+//                DataBlock db = dataBlockArray.get(index);
+//                String name = db.getName();
+//                TxtDatablock.setText(name);
+            }
+        };
+        
     }
     //Faz scroll para baixo de um scrollpane
     private void scrollToBottom(JScrollPane scrollPane) {
@@ -204,7 +269,7 @@ public class WindowFrame extends javax.swing.JFrame {
             }
             
             btClose.setPreferredSize(new Dimension(35, 35));
-            btClose.addActionListener(dataBlockDelListener);
+           // btClose.addActionListener(variableDelListener);
             
             //Botao de editar
             JButton btEdit = new JButton();
@@ -216,7 +281,7 @@ public class WindowFrame extends javax.swing.JFrame {
             }
             
             btEdit.setPreferredSize(new Dimension(35, 35));
-            btEdit.addActionListener(dataBlockEditListener);
+            btEdit.addActionListener(variableEditListener);
             
             JPanel pnl = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
             pnl.add(bt);
@@ -255,7 +320,7 @@ public class WindowFrame extends javax.swing.JFrame {
             }
             
             btClose.setPreferredSize(new Dimension(25, 25));
-            btClose.addActionListener(dataBlockDelListener);
+            btClose.addActionListener(variableDelListener);
             
             //Botao de editar
             JButton btEdit = new JButton();
@@ -267,7 +332,7 @@ public class WindowFrame extends javax.swing.JFrame {
             }
             
             btEdit.setPreferredSize(new Dimension(25, 25));
-            btEdit.addActionListener(dataBlockEditListener);
+            btEdit.addActionListener(variableEditListener);
             
             
             pnl.add(LblVariable);
