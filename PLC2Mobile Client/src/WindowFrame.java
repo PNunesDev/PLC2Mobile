@@ -72,6 +72,7 @@ public class WindowFrame extends javax.swing.JFrame {
     }
     
     public void initMyComps(){
+        BtnAddVariable.setVisible(false);
         pnlVarible= new JPanel();
         dataBlockArray = new ArrayList();
         pnlDataBlockQueue = new JPanel(new GridLayout(0, 1));
@@ -177,15 +178,16 @@ public class WindowFrame extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                ArrayList<Variable> vars = data.getVars();
                 JButton bt = (JButton) e.getSource();
                 JPanel pnl = (JPanel) bt.getParent();
-                bt = (JButton) pnl.getComponent(0);
-                String txt = bt.getText();
+                JLabel var = (JLabel) pnl.getComponent(1);
+                String txt = var.getText();
                 //int index=0;
-                for(int i=0; i<dataBlockArray.size(); i++){
-                    if(txt.equals(dataBlockArray.get(i).getName())){
-                        dataBlockArray.remove(i);
-                        showButtonsDataBlocks(dataBlockArray, false);
+                for(int i=0; i<vars.size(); i++){
+                    if(txt.equals(vars.get(i).getname())){
+                        data.delvar(i);
+                        showButtonsVariableBlock(data.getVars());
                         break;
                     }
                     
@@ -269,7 +271,7 @@ public class WindowFrame extends javax.swing.JFrame {
             }
             
             btClose.setPreferredSize(new Dimension(35, 35));
-           // btClose.addActionListener(variableDelListener);
+            btClose.addActionListener(dataBlockDelListener);
             
             //Botao de editar
             JButton btEdit = new JButton();
@@ -281,7 +283,7 @@ public class WindowFrame extends javax.swing.JFrame {
             }
             
             btEdit.setPreferredSize(new Dimension(35, 35));
-            btEdit.addActionListener(variableEditListener);
+            btEdit.addActionListener(dataBlockEditListener);
             
             JPanel pnl = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
             pnl.add(bt);
@@ -342,9 +344,10 @@ public class WindowFrame extends javax.swing.JFrame {
             
         
             pnlVariavel.add(pnl);
-            ScrollPaneVariable.setViewportView(pnlVariavel);
-            scrollToBottom(ScrollPaneVariable);
+            
         }
+        ScrollPaneVariable.setViewportView(pnlVariavel);
+        scrollToBottom(ScrollPaneVariable);
     }
 
 
@@ -490,6 +493,7 @@ public class WindowFrame extends javax.swing.JFrame {
             DataBlock db = new DataBlock(dbTxt);
             jLabelDataBlock.setText(dbTxt);
             jLabelDataBlock.setVisible(true);
+            BtnAddVariable.setVisible(true);
             //Por as variaveis para o data block
             //
             

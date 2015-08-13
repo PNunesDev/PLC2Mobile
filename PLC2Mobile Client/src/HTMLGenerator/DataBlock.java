@@ -44,4 +44,8 @@ public class DataBlock {
     public ArrayList<Variable> getVars(){
         return vars;
     }
+    
+    public void delvar(int index){
+        this.vars.remove(index); 
+    }
 }
