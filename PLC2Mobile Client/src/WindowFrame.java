@@ -71,6 +71,7 @@ public class WindowFrame extends javax.swing.JFrame {
     }
     
     public void initMyComps(){
+        BtnAddVariable.setVisible(false);
         pnlVarible= new JPanel();
         dataBlockArray = new ArrayList();
         pnlDataBlockQueue = new JPanel(new GridLayout(0, 1));
@@ -491,6 +492,7 @@ public class WindowFrame extends javax.swing.JFrame {
             DataBlock db = new DataBlock(dbTxt);
             jLabelDataBlock.setText(dbTxt);
             jLabelDataBlock.setVisible(true);
+            BtnAddVariable.setVisible(true);
             //Por as variaveis para o data block
             //
             
