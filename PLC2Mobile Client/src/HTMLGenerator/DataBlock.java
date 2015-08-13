@@ -40,4 +40,8 @@ public class DataBlock {
     public void setName(String name){
         this.name = name;
     }
+    
+    public ArrayList<Variable> getVars(){
+        return vars;
+    }
 }
