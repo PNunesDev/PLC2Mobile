@@ -45,14 +45,16 @@ import javax.swing.JTextField;
  */
 public class WindowFrame extends javax.swing.JFrame {
     ArrayList<DataBlock> dataBlockArray;
-    ArrayList<Variable> variableBlockArray;
+    DataBlock data;
     JPanel pnlDataBlockQueue;
     JPanel pnlVarible;
     JPanel pnlVarible2;
+    JPanel pnlVariavel;
     ActionListener dataBlockListener;;
     ActionListener dataBlockDelListener;
     ActionListener dataBlockEditListener;
     JFrame frame = this;
+    JLabel lblVariable2;
      
      
      ArrayList<JLabel> JlabelArray2;
@@ -68,14 +70,13 @@ public class WindowFrame extends javax.swing.JFrame {
     }
     
     public void initMyComps(){
-        
+        pnlVarible= new JPanel();
         dataBlockArray = new ArrayList();
-        variableBlockArray = new ArrayList();
         pnlDataBlockQueue = new JPanel(new GridLayout(0, 1));
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
         showButtonsDataBlocks(dataBlockArray, true);
         
-        pnlVarible = new JPanel(new GridLayout(0, 1));
+        pnlVariavel = new JPanel(new GridLayout(0, 1));
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
         
         jLabelDataBlock.setVisible(false);
@@ -99,6 +100,7 @@ public class WindowFrame extends javax.swing.JFrame {
                 String name = db.getName();
                 jLabelDataBlock.setText(name);
                 jLabelDataBlock.setVisible(true);
+                data = db;
                 //TxtDatablock.setText(name);
                 //String newName = JOptionPane.showInputDialog(frame, "Novo nome", null);
                 //JOptionPane.showInputDialog(frame, "Novo nome:", "Editar nome DataBlock", 3);
@@ -234,26 +236,51 @@ public class WindowFrame extends javax.swing.JFrame {
     }
     
      private void showButtonsVariableBlock(ArrayList<Variable> array){
-        pnlVarible.removeAll();
+        pnlVariavel.removeAll();
         int lenght = array.size();
-        Variable db;
+        Variable var;
         for(int i=0; i<lenght; i++){
-            db = array.get(i);
+            var = array.get(i);
             JLabel LblVariable = new JLabel("Variavel "+(i+1)+":");
-            JTextField bt = new JTextField(db.getname());
-            bt.setPreferredSize(new Dimension(100, 35));
-            JPanel lhurz = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
-            lhurz.add(LblVariable);
-            lhurz.add(bt);
-            pnlVarible.add(lhurz);
+            JLabel bt = new JLabel(var.getname());
+            bt.setPreferredSize(new Dimension(260, 35));
+            JPanel pnl = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
             
-            ScrollPaneVariable.setViewportView(pnlVarible);
+            JButton btClose = new JButton();
+            
+            try {
+                Image img = ImageIO.read(getClass().getResource("resources/Close_Box_Red.png"));
+                btClose.setIcon(new ImageIcon(img));
+            } catch (IOException ex) {
+            }
+            
+            btClose.setPreferredSize(new Dimension(25, 25));
+            btClose.addActionListener(dataBlockDelListener);
+            
+            //Botao de editar
+            JButton btEdit = new JButton();
+            
+            try {
+                Image img = ImageIO.read(getClass().getResource("resources/Edit-Icon.png"));
+                btEdit.setIcon(new ImageIcon(img));
+            } catch (IOException ex) {
+            }
+            
+            btEdit.setPreferredSize(new Dimension(25, 25));
+            btEdit.addActionListener(dataBlockEditListener);
+            
+            
+            pnl.add(LblVariable);
+            pnl.add(bt);
+            pnl.add(btEdit);
+            pnl.add(btClose);
+            
+        
+            pnlVariavel.add(pnl);
+            ScrollPaneVariable.setViewportView(pnlVariavel);
             scrollToBottom(ScrollPaneVariable);
         }
     }
-
- 
-
 
 
     /**
@@ -272,7 +299,6 @@ public class WindowFrame extends javax.swing.JFrame {
         ScrollPaneVariable = new javax.swing.JScrollPane();
         AddToQueue = new javax.swing.JButton();
         BtnAddVariable = new javax.swing.JButton();
-        TxtVariable = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PLC2Mobile Client");
@@ -299,7 +325,7 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addComponent(LblVariable)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelDataBlock)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
         PanelAddVariableLayout.setVerticalGroup(
             PanelAddVariableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,6 +337,8 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        ScrollPaneVariable.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
         AddToQueue.setText("New Data Block");
         AddToQueue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -318,7 +346,7 @@ public class WindowFrame extends javax.swing.JFrame {
             }
         });
 
-        BtnAddVariable.setText("Add to Queue");
+        BtnAddVariable.setText("New Variable");
         BtnAddVariable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAddVariableActionPerformed(evt);
@@ -333,18 +361,12 @@ public class WindowFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(ScrollPaneDatablockQueue)
-                    .addComponent(AddToQueue, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                    .addComponent(AddToQueue, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PanelAddVariable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ScrollPaneVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BtnAddVariable)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 89, Short.MAX_VALUE)))
+                    .addComponent(PanelAddVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ScrollPaneVariable)
+                    .addComponent(BtnAddVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -358,10 +380,9 @@ public class WindowFrame extends javax.swing.JFrame {
                         .addComponent(ScrollPaneVariable))
                     .addComponent(ScrollPaneDatablockQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(AddToQueue, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(BtnAddVariable)
-                    .addComponent(TxtVariable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BtnAddVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -410,31 +431,44 @@ public class WindowFrame extends javax.swing.JFrame {
             
             dataBlockArray.add(db);
             showButtonsDataBlocks(dataBlockArray, true);
+            data = db;
             
     }//GEN-LAST:event_AddToQueueActionPerformed
 
     private void BtnAddVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddVariableActionPerformed
-            String btTxt = TxtVariable.getText();
-            TxtVariable.setText(null);
-            TxtVariable.grabFocus();
+
+          //String btTxt = TxtDatablock.getText();
+        
+        ArrayList<Variable> vars = data.getVars();
+            String varTxt = JOptionPane.showInputDialog(rootPane, "Novo nome:", "Editar nome DataBlock", 3);
+            if(varTxt.equals("")){
+                JOptionPane.showMessageDialog(this,
+                "Atribuir um nome ao DataBlock!",
+                "Aviso",
+                JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             
             Integer index=null;
-            for(int i=0; i<variableBlockArray.size(); i++){
-                    if(btTxt.equals(variableBlockArray.get(i).getname())){
+            for(int i=0; i<vars.size(); i++){
+                    if(varTxt.equals(vars.get(i).getname())){
                         index = i;
                         break;
                     }
-                    
                 }
             if(!(index==null)){
-                System.out.println("ERRO!!");
+                JOptionPane.showMessageDialog(this,
+                "Já existe um DataBlock com esse nome!",
+                "Conflito",
+                JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
-            Variable var= new Variable(btTxt);
-            variableBlockArray.add(var);
-            System.out.println(var.getname());
-            showButtonsVariableBlock(variableBlockArray);
+            Variable var = new Variable(varTxt);
+            data.addVar(var);
+            //JLabel lblVariable3 = new JLabel(varTxt);
+//            dataBlockArray.get(dbindex).addVar(var);
+            showButtonsVariableBlock(data.getVars());
     }//GEN-LAST:event_BtnAddVariableActionPerformed
 
     /**
@@ -479,7 +513,6 @@ public class WindowFrame extends javax.swing.JFrame {
     private javax.swing.JPanel PanelAddVariable;
     private javax.swing.JScrollPane ScrollPaneDatablockQueue;
     private javax.swing.JScrollPane ScrollPaneVariable;
-    private javax.swing.JTextField TxtVariable;
     private javax.swing.JLabel jLabelDataBlock;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,22 +28,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="ScrollPaneDatablockQueue" max="32767" attributes="0"/>
-                  <Component id="AddToQueue" pref="204" max="32767" attributes="0"/>
+                  <Component id="AddToQueue" pref="250" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="PanelAddVariable" alignment="1" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="ScrollPaneVariable" min="-2" pref="233" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="BtnAddVariable" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="TxtVariable" min="-2" pref="198" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="89" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="PanelAddVariable" max="32767" attributes="0"/>
+                  <Component id="ScrollPaneVariable" max="32767" attributes="0"/>
+                  <Component id="BtnAddVariable" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -62,10 +53,9 @@
                   <Component id="ScrollPaneDatablockQueue" min="-2" pref="218" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="AddToQueue" alignment="3" pref="39" max="32767" attributes="0"/>
-                  <Component id="BtnAddVariable" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TxtVariable" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="AddToQueue" pref="39" max="32767" attributes="0"/>
+                  <Component id="BtnAddVariable" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -110,7 +100,7 @@
                   <Component id="LblVariable" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabelDataBlock" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="192" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -147,6 +137,9 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JScrollPane" name="ScrollPaneVariable">
+      <Properties>
+        <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
     </Container>
@@ -160,13 +153,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="BtnAddVariable">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Add to Queue"/>
+        <Property name="text" type="java.lang.String" value="New Variable"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAddVariableActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="TxtVariable">
     </Component>
   </SubComponents>
 </Form>
