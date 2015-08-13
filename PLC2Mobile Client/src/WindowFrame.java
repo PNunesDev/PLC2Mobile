@@ -1,5 +1,6 @@
 
 import HTMLGenerator.DataBlock;
+import HTMLGenerator.Util;
 import HTMLGenerator.Variable;
 import java.awt.Adjustable;
 import java.awt.Button;
@@ -60,7 +61,7 @@ public class WindowFrame extends javax.swing.JFrame {
      * Creates new form WindowFrame
      */
     public WindowFrame() {
-        
+        Util utils = new Util();
         initComponents();
         initMyComps();
 
