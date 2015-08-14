@@ -28,7 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="ScrollPaneDatablockQueue" max="32767" attributes="0"/>
-                  <Component id="AddToQueue" pref="250" max="32767" attributes="0"/>
+                  <Component id="addNewDB" pref="250" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -54,7 +54,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="AddToQueue" pref="39" max="32767" attributes="0"/>
+                  <Component id="addNewDB" pref="39" max="32767" attributes="0"/>
                   <Component id="BtnAddVariable" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -97,9 +97,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                  <Component id="LblVariable" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblDataBlock" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jLabelDataBlock" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblShowDataBlock" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="192" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -109,8 +109,8 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="LblVariable" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelDataBlock" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblDataBlock" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblShowDataBlock" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -118,7 +118,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="LblVariable">
+        <Component class="javax.swing.JLabel" name="lblDataBlock">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="1"/>
@@ -126,7 +126,7 @@
             <Property name="text" type="java.lang.String" value="Data Block:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelDataBlock">
+        <Component class="javax.swing.JLabel" name="lblShowDataBlock">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="24" style="1"/>
@@ -143,12 +143,12 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
     </Container>
-    <Component class="javax.swing.JButton" name="AddToQueue">
+    <Component class="javax.swing.JButton" name="addNewDB">
       <Properties>
         <Property name="text" type="java.lang.String" value="New Data Block"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddToQueueActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addNewDBActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnAddVariable">
