@@ -104,6 +104,7 @@ public class WindowFrame extends javax.swing.JFrame {
                 jLabelDataBlock.setText(name);
                 jLabelDataBlock.setVisible(true);
                 data = db;
+                showButtonsVariableBlock(data.getVars());
                 //TxtDatablock.setText(name);
                 //String newName = JOptionPane.showInputDialog(frame, "Novo nome", null);
                 //JOptionPane.showInputDialog(frame, "Novo nome:", "Editar nome DataBlock", 3);
@@ -125,6 +126,11 @@ public class WindowFrame extends javax.swing.JFrame {
                     if(txt.equals(dataBlockArray.get(i).getName())){
                         dataBlockArray.remove(i);
                         showButtonsDataBlocks(dataBlockArray, false);
+                        if(txt.equals(data.getName())){
+                            data = dataBlockArray.get(0);
+                            showButtonsVariableBlock(data.getVars());
+                        }
+                        
                         break;
                     }
                     
