@@ -60,7 +60,7 @@ public class WindowFrame extends javax.swing.JFrame {
     
     final void initMyComps(){
         
-        BtnAddVariable.setVisible(false);
+        addNewVariable.setVisible(false);
         dataBlockArray = new ArrayList();
         pnlDataBlockQueue = new JPanel(new GridLayout(0, 1));
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
@@ -80,7 +80,7 @@ public class WindowFrame extends javax.swing.JFrame {
             selectedDB = dataBlockArray.get(index);
             lblShowDataBlock.setText(selectedDB.getName());
             lblShowDataBlock.setVisible(true);
-            showButtonsVariableBlock(selectedDB.getVars());
+            showVariables(selectedDB.getVars());
         };
         
         dataBlockDelListener = (ActionEvent e) -> {
@@ -92,9 +92,13 @@ public class WindowFrame extends javax.swing.JFrame {
             if(selectedDB.equals(dataBlockArray.get(index))){
                 selectedDB = dataBlockArray.get(0);
                 lblShowDataBlock.setText(selectedDB.getName());
-                showButtonsVariableBlock(selectedDB.getVars());
+                showVariables(selectedDB.getVars());
             }
             dataBlockArray.remove(index);
+            if(dataBlockArray.isEmpty()){
+                pnlVariable.removeAll();
+                lblShowDataBlock.setText(null);
+            }
             showButtonsDataBlocks(dataBlockArray, false);
         };
         
@@ -118,27 +122,17 @@ public class WindowFrame extends javax.swing.JFrame {
             selectedDB = dataBlockArray.get(indx);
             lblShowDataBlock.setText(txt);
             showButtonsDataBlocks(dataBlockArray, false);
-            showButtonsVariableBlock(selectedDB.getVars());
+            showVariables(selectedDB.getVars());
         };
         
          variableDelListener = (ActionEvent e) -> {
-             ArrayList<Variable> vars = selectedDB.getVars();
-             JButton bt = (JButton) e.getSource();
-             JPanel pnl = (JPanel) bt.getParent();
-             JLabel var = (JLabel) pnl.getComponent(1);
-             String txt = var.getText();
-             //int index=0;
-             for(int i=0; i<vars.size(); i++){
-                 if(txt.equals(vars.get(i).getname())){
-                     selectedDB.delvar(i);
-                     showButtonsVariableBlock(selectedDB.getVars());
-                     break;
-                 }
-                 
-             }
-//                DataBlock db = dataBlockArray.get(index);
-//                String name = db.getName();
-//                TxtDatablock.setText(name);
+             
+            JButton bt = (JButton) e.getSource();
+            JPanel pnl = (JPanel) bt.getParent();
+            JPanel container = (JPanel) pnl.getParent();
+            int indx = container.getComponentZOrder(pnl);
+            selectedDB.delvar(indx);
+            showVariables(selectedDB.getVars());
         };
         
         //Açao do botao de editar
@@ -256,7 +250,7 @@ public class WindowFrame extends javax.swing.JFrame {
         ScrollPaneDatablockQueue.setViewportView(pnlDataBlockQueue);
     }
     
-     private void showButtonsVariableBlock(ArrayList<Variable> array){
+     private void showVariables(ArrayList<Variable> array){
         pnlVariable.removeAll();
         int lenght = array.size();
         Variable var;
@@ -320,7 +314,8 @@ public class WindowFrame extends javax.swing.JFrame {
         lblShowDataBlock = new javax.swing.JLabel();
         ScrollPaneVariable = new javax.swing.JScrollPane();
         addNewDB = new javax.swing.JButton();
-        BtnAddVariable = new javax.swing.JButton();
+        addNewVariable = new javax.swing.JButton();
+        btGen = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PLC2Mobile Client");
@@ -368,10 +363,17 @@ public class WindowFrame extends javax.swing.JFrame {
             }
         });
 
-        BtnAddVariable.setText("New Variable");
-        BtnAddVariable.addActionListener(new java.awt.event.ActionListener() {
+        addNewVariable.setText("New Variable");
+        addNewVariable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnAddVariableActionPerformed(evt);
+                addNewVariableActionPerformed(evt);
+            }
+        });
+
+        btGen.setText("Generate");
+        btGen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGenActionPerformed(evt);
             }
         });
 
@@ -381,14 +383,19 @@ public class WindowFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ScrollPaneDatablockQueue)
-                    .addComponent(addNewDB, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PanelAddVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ScrollPaneVariable)
-                    .addComponent(BtnAddVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ScrollPaneDatablockQueue)
+                            .addComponent(addNewDB, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PanelAddVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ScrollPaneVariable)
+                            .addComponent(addNewVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btGen)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -403,9 +410,10 @@ public class WindowFrame extends javax.swing.JFrame {
                     .addComponent(ScrollPaneDatablockQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addNewDB, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(BtnAddVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(addNewDB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addNewVariable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btGen))
         );
 
         pack();
@@ -438,14 +446,13 @@ public class WindowFrame extends javax.swing.JFrame {
             selectedDB = new DataBlock(dbName);
             lblShowDataBlock.setText(dbName);
             lblShowDataBlock.setVisible(true);
-            BtnAddVariable.setVisible(true);
+            addNewVariable.setVisible(true);
             dataBlockArray.add(selectedDB);
             showButtonsDataBlocks(dataBlockArray, true);
+            showVariables(selectedDB.getVars());
     }//GEN-LAST:event_addNewDBActionPerformed
 
-    private void BtnAddVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddVariableActionPerformed
-
-          //String btTxt = TxtDatablock.getText();
+    private void addNewVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewVariableActionPerformed
         
         ArrayList<Variable> vars = selectedDB.getVars();
             String varTxt = JOptionPane.showInputDialog(rootPane, "Novo nome:", "Editar nome DataBlock", 3);
@@ -474,8 +481,12 @@ public class WindowFrame extends javax.swing.JFrame {
             }
             Variable var = new Variable(varTxt);
             selectedDB.addVar(var);
-            showButtonsVariableBlock(selectedDB.getVars());
-    }//GEN-LAST:event_BtnAddVariableActionPerformed
+            showVariables(selectedDB.getVars());
+    }//GEN-LAST:event_addNewVariableActionPerformed
+
+    private void btGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGenActionPerformed
+        Util utils = new Util(dataBlockArray);
+    }//GEN-LAST:event_btGenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -513,11 +524,12 @@ public class WindowFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnAddVariable;
     private javax.swing.JPanel PanelAddVariable;
     private javax.swing.JScrollPane ScrollPaneDatablockQueue;
     private javax.swing.JScrollPane ScrollPaneVariable;
     private javax.swing.JButton addNewDB;
+    private javax.swing.JButton addNewVariable;
+    private javax.swing.JButton btGen;
     private javax.swing.JLabel lblDataBlock;
     private javax.swing.JLabel lblShowDataBlock;
     // End of variables declaration//GEN-END:variables
