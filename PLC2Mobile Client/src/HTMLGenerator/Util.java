@@ -6,13 +6,17 @@
 package HTMLGenerator;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,6 +43,16 @@ public class Util {
             }
         }
         
+        PrintWriter writer=null;
+        try {
+            writer = new PrintWriter("C:\\Users\\Luis\\Desktop\\uptime.html", "UTF-8");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         Charset charset = Charset.forName("ASCII");
         try (BufferedReader reader = Files.newBufferedReader(file, charset)) {
             String line = null;
@@ -46,27 +60,15 @@ public class Util {
                 if(line.contains("$$")){
                     line = line.replace("$$", html);
                 }
-                System.out.println(line);
-            }
-        } catch (IOException x) {
-            System.err.format("IOException: %s%n", x);
-        }
-        
-    }
-    
-    public Util(){
-        
-        Charset charset = Charset.forName("ASCII");
-        try (BufferedReader reader = Files.newBufferedReader(file, charset)) {
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                if(line.contains("$")){
-                    line.replace("$", html);
+                try {
+                    writer.println(line);
+                } catch (Exception e) {
                 }
                 System.out.println(line);
             }
         } catch (IOException x) {
             System.err.format("IOException: %s%n", x);
         }
+        writer.close();
     }
 }
