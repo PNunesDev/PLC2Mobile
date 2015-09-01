@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">PLC</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="endereco">Endereço</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_display_plc">DisplayPLC</string>
-</resources>
