@@ -7,7 +7,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +17,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -40,6 +37,17 @@ public class MainActivity extends AppCompatActivity {
         edTB = (EditText) findViewById(R.id.edTB);
         edTC = (EditText) findViewById(R.id.edTC);
         edTD = (EditText) findViewById(R.id.edTD);
+        edTA.setText("192");
+        edTB.setText("168");
+        edTC.setText("1");
+        edTD.setText("40");
+
+
+        //Para testes apenas-----------------------------------------------
+        //-----------------------------------------------------------------
+//        Intent intent = new Intent(getApplicationContext(), showActivity.class);
+//        startActivity(intent);
+        //----------------------
 
     }
 
@@ -101,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_MESSAGE, result);
             startActivity(intent);
 
-            //textView.setText(result);
         }
     }
 
@@ -109,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
         InputStream is = null;
         // Only display the first 500 characters of the retrieved
         // web page content.
-        int len = 500;
 
         try {
             URL url = new URL(myurl);
@@ -120,12 +126,12 @@ public class MainActivity extends AppCompatActivity {
             conn.setDoInput(true);
             // Starts the query
             conn.connect();
-            int response = conn.getResponseCode();
+            //int response = conn.getResponseCode();
             is = conn.getInputStream();
 
             // Convert the InputStream into a string
-            String contentAsString = readIt(is);
-            return contentAsString;
+            //String contentAsString = readIt(is);
+            return readIt(is);
 
             // Makes sure that the InputStream is closed after the app is
             // finished using it.
@@ -136,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String readIt(InputStream stream) throws IOException, UnsupportedEncodingException {
+    public String readIt(InputStream stream) throws IOException {
 //        Reader reader = null;
 //        reader = new InputStreamReader(stream, "UTF-8");
 //        char[] buffer = new char[len];
